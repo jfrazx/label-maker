@@ -1,0 +1,121 @@
+{
+  "name": "label-maker",
+  "version": "0.0.0-development",
+  "description": "Generate endless labels",
+  "source": "src/index.ts",
+  "main": "dist/main.js",
+  "module": "dist/module.mjs",
+  "types": "dist/types.d.ts",
+  "scripts": {
+    "coverage:check": "nyc check-coverage",
+    "coverage:report": "nyc report --reporter=text-lcov > coverage.lcov",
+    "coverage:post": "codecov",
+    "precoverage:test": "rimraf coverage",
+    "coverage:test": "nyc mocha",
+    "test": "mocha",
+    "watch": "parcel watch",
+    "prebuild": "rimraf dist",
+    "build": "parcel build",
+    "semantic-release": "semantic-release"
+  },
+  "exports": {
+    "import": "./dist/module.mjs",
+    "require": "./dist/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jfrazx/label-maker.git"
+  },
+  "keywords": [
+    "label",
+    "labels"
+  ],
+  "author": "jfrazx",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jfrazx/label-maker/issues"
+  },
+  "homepage": "https://github.com/jfrazx/label-maker#readme",
+  "devDependencies": {
+    "@istanbuljs/nyc-config-typescript": "^1.0.2",
+    "@parcel/packager-ts": "2.8.3",
+    "@parcel/transformer-typescript-types": "2.8.3",
+    "@semantic-release/commit-analyzer": "^9.0.2",
+    "@semantic-release/release-notes-generator": "^11.0.1",
+    "@types/chai": "^4.3.5",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^18.16.3",
+    "@typescript-eslint/parser": "^5.59.1",
+    "chai": "^4.3.7",
+    "codecov": "^3.8.3",
+    "commitizen": "^4.3.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^8.39.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "husky": "^8.0.3",
+    "mocha": "^10.2.0",
+    "nyc": "^15.1.0",
+    "parcel": "^2.8.3",
+    "prettier": "^2.8.8",
+    "rimraf": "^5.0.0",
+    "semantic-release": "^21.0.2",
+    "semantic-release-cli": "^5.4.4",
+    "source-map-support": "^0.5.21",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
+  "mocha": {
+    "recursive": true,
+    "spec": "test/*.spec.ts",
+    "reporter": "spec",
+    "require": [
+      "ts-node/register/transpile-only",
+      "source-map-support/register"
+    ]
+  },
+  "release": {
+    "branches": [
+      "master"
+    ],
+    "plugins": [
+      [
+        "@semantic-release/commit-analyzer",
+        {
+          "preset": "angular",
+          "releaseRules": [
+            {
+              "type": "docs",
+              "scope": "README",
+              "release": "patch"
+            },
+            {
+              "type": "refactor",
+              "release": "patch"
+            },
+            {
+              "type": "style",
+              "release": "patch"
+            }
+          ],
+          "parserOpts": {
+            "noteKeywords": [
+              "BREAKING CHANGE",
+              "BREAKING CHANGES"
+            ]
+          }
+        }
+      ],
+      "@semantic-release/release-notes-generator"
+    ]
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

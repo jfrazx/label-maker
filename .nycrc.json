@@ -1,0 +1,18 @@
+{
+  "extends": "@istanbuljs/nyc-config-typescript",
+  "produce-source-map": true,
+  "check-coverage": true,
+  "include": ["src"],
+  "statements": 90,
+  "functions": 90,
+  "branches": 90,
+  "lines": 90,
+  "all": false,
+  "cache": false,
+  "report-dir": "./coverage",
+  "extension": [".ts", ".tsx"],
+  "tmp-directory": ".nyc_output",
+  "reporter": ["lcov", "text-summary", "html"],
+  "exclude": ["src/index.ts", "test/**/*", "coverage/**/*", "**/*.d.ts"],
+  "require": ["ts-node/register/transpile-only", "source-map-support/register"]
+}
