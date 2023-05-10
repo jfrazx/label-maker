@@ -6,12 +6,12 @@ on:
   pull_request:
     branches: ['master', 'develop']
   schedule:
-    - cron: '19 12 * * 6'
+    - cron: '15 3 * * 2'
 
 jobs:
   analyze:
     name: Analyze
-    runs-on: ubuntu-latest
+    runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
     permissions:
       actions: read
       contents: read
@@ -21,6 +21,7 @@ jobs:
       fail-fast: false
       matrix:
         language: ['javascript']
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
