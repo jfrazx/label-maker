@@ -7,22 +7,19 @@ export class Labeler {
   constructor(private readonly labels: Label[] = []) {}
 
   labeler = (label: string, options: LabelOptions = {}): LabelMaker => {
-    const delimiter = this.getDelimiter(
-      typeof options === 'string' ? options : options.delimiter,
-    );
+    const opts = typeof options === 'string' ? { delimiter: options } : options;
+    const delimiter = this.getDelimiter(opts.delimiter);
 
     const labelMaker = new Labeler([
       ...this.labels,
       {
         label,
         delimiter,
-        includeFinalDelimiter: this.getIncludeFinalDelimiter(
-          typeof options === 'string' ? void 0 : options.includeFinalDelimiter,
-        ),
+        includeFinalDelimiter: this.getIncludeFinalDelimiter(opts.includeFinalDelimiter),
       },
     ]);
 
-    labelMaker.labeler.toString = this.toString.bind(labelMaker);
+    labelMaker.labeler.toString = labelMaker.toString;
 
     return labelMaker.labeler;
   };
@@ -47,13 +44,13 @@ export class Labeler {
     return this.labels[this.labels.length - 1];
   }
 
-  toString(): string {
+  toString = (): string => {
     return this.labels.reduce(
       (memo: string, { label, delimiter }: Label, index: number) =>
         `${memo}${label}${this.appendDelimiter(index) ? delimiter : ''}`,
       '',
     );
-  }
+  };
 
   private appendDelimiter(index: number): boolean {
     return index < this.labels.length - 1 || this.lastIncludeFinalDelimiter;

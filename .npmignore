@@ -11,7 +11,6 @@ tslint.json
 .prettierrc
 .releaserc
 .nycrc.json
-.parcel-cache/
 cspell.json
 *.lcov
 yarn.lock
@@ -32,3 +31,5 @@ scripts/
 .vscode/
 .github/
 coverage/
+.husky/
+.parcel-cache/
