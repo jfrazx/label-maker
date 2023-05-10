@@ -53,6 +53,17 @@ describe(`Labeler`, () => {
         labelMaker('foo', '+')('bar')('baz', { delimiter: '-' })('jaz').toString(),
       ).to.equal('foo+bar+baz-jaz');
     });
+
+    it(`should use the last delimiter if no delimiter is provided with includeFinalDelimiter`, () => {
+      expect(
+        labelMaker(
+          'foo',
+          '+',
+        )('bar')('baz', { delimiter: '-' })('jaz', {
+          includeFinalDelimiter: true,
+        }).toString(),
+      ).to.equal('foo+bar+baz-jaz-');
+    });
   });
 
   describe(`toStringImplicit`, () => {
@@ -81,10 +92,20 @@ describe(`Labeler`, () => {
         'foo-bar+baz',
       );
     });
+
     it(`should use the last delimiter if no delimiter is provided`, () => {
       expect(`${labelMaker('foo', '+')('bar')('baz', { delimiter: '-' })('jaz')}`).to.equal(
         'foo+bar+baz-jaz',
       );
+    });
+
+    it(`should use the last delimiter if no delimiter is provided with includeFinalDelimiter`, () => {
+      expect(
+        `${labelMaker('foo', '+')('bar')('baz', {
+          delimiter: '-',
+          includeFinalDelimiter: true,
+        })('jaz', {})}`,
+      ).to.equal('foo+bar+baz-jaz-');
     });
   });
 });
