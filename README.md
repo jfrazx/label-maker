@@ -37,6 +37,8 @@ const labeler: LabelMaker = labelMaker('foo', ':')('bar', '>')('baz', {
 expect(`${labeler('qux', '|')}`).toBe('foo:bar>baz   qux|');
 ```
 
+Passing a label: (string) as first parameter is required. You may optionally provide an alternate delimiter: (string) as a second parameter, or an object with the properties described below.
+
 ## Options
 
 ### `includeFinalDelimiter`
