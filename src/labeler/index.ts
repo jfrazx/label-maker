@@ -1,4 +1,4 @@
-import type { Label, LabelOptions, LabelMaker } from '../interfaces';
+import type { Label, LabelOptions, LabelMaker, LabelerOptions } from '../interfaces';
 
 const defaultDelimiter: string = '|';
 const defaultIncludeFinalDelimiter: boolean = false;
@@ -7,8 +7,10 @@ export class Labeler {
   constructor(private readonly labels: Label[] = []) {}
 
   labeler = (label: string, options: LabelOptions = {}): LabelMaker => {
-    const opts = typeof options === 'string' ? { delimiter: options } : options;
-    const delimiter = this.getDelimiter(opts.delimiter);
+    const opts: LabelerOptions =
+      typeof options === 'string' ? { delimiter: options } : options;
+
+    const delimiter: string = this.getDelimiter(opts.delimiter);
 
     const labelMaker = new Labeler([
       ...this.labels,
@@ -32,15 +34,15 @@ export class Labeler {
     return include ?? this.lastIncludeFinalDelimiter ?? defaultIncludeFinalDelimiter;
   }
 
-  private get lastIncludeFinalDelimiter(): boolean {
+  private get lastIncludeFinalDelimiter(): boolean | undefined {
     return this.lastElement?.includeFinalDelimiter;
   }
 
-  private get lastDelimiter(): string {
+  private get lastDelimiter(): string | undefined {
     return this.lastElement?.delimiter;
   }
 
-  private get lastElement(): Label {
+  private get lastElement(): Label | undefined {
     return this.labels[this.labels.length - 1];
   }
 
@@ -52,7 +54,7 @@ export class Labeler {
     );
   };
 
-  private appendDelimiter(index: number): boolean {
+  private appendDelimiter(index: number): boolean | undefined {
     return index < this.labels.length - 1 || this.lastIncludeFinalDelimiter;
   }
 }

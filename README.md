@@ -5,21 +5,21 @@ Continuous label generator
 ## Install
 
 ```bash
-npm install label-maker
+npm install @status/label-maker
 ```
 
 or
 
 ```bash
-yarn add label-maker
+yarn add @status/label-maker
 ```
 
 ## Usage
 
-Generate endless labels with `labelMaker`:
+Generate endless labels with `@status/label-maker`:
 
 ```typescript
-import { LabelMaker, labelMaker } from 'label-maker';
+import { LabelMaker, labelMaker } from '@status/label-maker';
 
 const labeler: LabelMaker = labelMaker('foo')('bar');
 
