@@ -1,10 +1,5 @@
 import type { LabelMaker } from './interfaces';
 import { Labeler } from './labeler';
 
-const label = new Labeler();
-
-export const labelMaker: LabelMaker = label.labeler;
-
-labelMaker.toString = label.toString;
-
+export const labelMaker: LabelMaker = Labeler.create([]);
 export type { LabelMaker, LabelOptions, LabelerOptions } from './interfaces';
