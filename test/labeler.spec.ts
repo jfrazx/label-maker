@@ -487,6 +487,15 @@ describe(`Labeler`, () => {
           })('bar').toString(),
         ).to.equal('%foo+bar-');
       });
+
+      it(`should not prepend a delimiter if includePrependedDelimiter is false`, () => {
+        expect(
+          labelMaker('foo', {
+            includePrependedDelimiter: false,
+            prependDelimiter: '-',
+          })('bar').toString(),
+        ).to.equal('foo|bar');
+      });
     });
 
     describe(`appendDelimiter`, () => {
@@ -526,12 +535,126 @@ describe(`Labeler`, () => {
         ).to.equal('%foo+bar-');
       });
 
-      it.skip(`should not append a delimiter if includeFinalDelimiter is false`, () => {
+      it(`should not append a delimiter if includeFinalDelimiter is false`, () => {
         expect(
           labelMaker('foo', {
             includeFinalDelimiter: false,
             appendDelimiter: '-',
           })('bar').toString(),
+        ).to.equal('foo|bar');
+      });
+    });
+
+    describe(`includeFinalDelimiter`, () => {
+      it(`should include a final delimiter`, () => {
+        expect(
+          labelMaker('foo', {
+            includeFinalDelimiter: true,
+          })('bar').toString(),
+        ).to.equal('foo|bar|');
+      });
+
+      it(`should not include a final delimiter`, () => {
+        expect(
+          labelMaker('foo', {
+            includeFinalDelimiter: false,
+          })('bar').toString(),
+        ).to.equal('foo|bar');
+      });
+
+      it(`should include a final delimiter with a custom delimiter`, () => {
+        expect(
+          labelMaker('foo', {
+            includeFinalDelimiter: true,
+            delimiter: '-',
+          })('bar').toString(),
+        ).to.equal('foo-bar-');
+      });
+
+      it(`should include a final delimiter with a custom final delimiter`, () => {
+        expect(
+          labelMaker('foo', {
+            includeFinalDelimiter: true,
+            appendDelimiter: '-',
+          })('bar').toString(),
+        ).to.equal('foo|bar-');
+      });
+
+      it(`should include a final delimiter with a custom final delimiter and delimiter`, () => {
+        expect(
+          labelMaker('foo', {
+            prependDelimiter: '%',
+            appendDelimiter: '-',
+            delimiter: '+',
+          })('bar').toString(),
+        ).to.equal('%foo+bar-');
+      });
+
+      it(`should not include a final delimiter if includeFinalDelimiter is false`, () => {
+        expect(
+          labelMaker('foo', {
+            includeFinalDelimiter: true,
+            appendDelimiter: '-',
+          })('bar', {
+            includeFinalDelimiter: false,
+          }).toString(),
+        ).to.equal('foo|bar');
+      });
+    });
+
+    describe(`includePrependedDelimiter`, () => {
+      it(`should include a prepended delimiter`, () => {
+        expect(
+          labelMaker('foo', {
+            includePrependedDelimiter: true,
+          })('bar').toString(),
+        ).to.equal('|foo|bar');
+      });
+
+      it(`should not include a prepended delimiter`, () => {
+        expect(
+          labelMaker('foo', {
+            includePrependedDelimiter: false,
+          })('bar').toString(),
+        ).to.equal('foo|bar');
+      });
+
+      it(`should include a prepended delimiter with a custom delimiter`, () => {
+        expect(
+          labelMaker('foo', {
+            includePrependedDelimiter: true,
+            delimiter: '-',
+          })('bar').toString(),
+        ).to.equal('-foo-bar');
+      });
+
+      it(`should include a prepended delimiter with a custom final delimiter`, () => {
+        expect(
+          labelMaker('foo', {
+            includePrependedDelimiter: true,
+            appendDelimiter: '-',
+          })('bar').toString(),
+        ).to.equal('|foo|bar-');
+      });
+
+      it(`should include a prepended delimiter with a custom final delimiter and delimiter`, () => {
+        expect(
+          labelMaker('foo', {
+            prependDelimiter: '%',
+            appendDelimiter: '-',
+            delimiter: '+',
+          })('bar').toString(),
+        ).to.equal('%foo+bar-');
+      });
+
+      it(`should not include a prepended delimiter if includePrependedDelimiter is false`, () => {
+        expect(
+          labelMaker('foo', {
+            includePrependedDelimiter: true,
+            prependDelimiter: '-',
+          })('bar', {
+            includePrependedDelimiter: false,
+          }).toString(),
         ).to.equal('foo|bar');
       });
     });
